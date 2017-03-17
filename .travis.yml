@@ -15,9 +15,8 @@ install:
 - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - bower install -f
 script:
-- docker exec -it origin /usr/bin/oc get nodes
 - grunt build
-
+- docker exec -it origin /usr/bin/oc get nodes
 notifications:
  email:
    on_success: never
