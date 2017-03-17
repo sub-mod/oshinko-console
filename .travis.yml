@@ -1,0 +1,24 @@
+sudo: required
+language: node_js
+node_js:
+ - "0.10"
+services:
+- docker
+before_script:
+- docker pull openshift/origin
+- docker run -d --name "origin" --privileged --pid=host --net=host -v /:/rootfs:ro -v /var/run:/var/run:rw -v /sys:/sys -v /var/lib/docker:/var/lib/docker:rw -v /var/lib/origin/openshift.local.volumes:/var/lib/origin/openshift.local.volumes:rw  openshift/origin start
+- docker ps -a
+install:
+- npm install grunt-cli -g
+- npm install bower -g
+- npm install
+- echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+- bower install -f
+script:
+- docker exec -it origin /usr/bin/oc get nodes
+- grunt build
+
+notifications:
+ email:
+   on_success: never
+   on_failure: never
