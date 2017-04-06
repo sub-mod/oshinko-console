@@ -73,7 +73,7 @@ before_script:
 script:
 - echo ${IP}
 ## integration tests need headless setup
-## - grunt test-integration --baseUrl=https://${IP}
+- grunt test-integration --baseUrl=https://${IP}
 notifications:
  email:
    on_success: never
